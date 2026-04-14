@@ -14,7 +14,7 @@ const RecipeCard = ({ recipe, onClick }) => {
           </span>
           <span className="tag prep-time">
             <Clock size={12} />
-            {recipe.prepTime}
+            {recipe.preptime}
           </span>
         </div>
         <h3 className="card-title">{recipe.title}</h3>

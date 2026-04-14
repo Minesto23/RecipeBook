@@ -1,12 +1,26 @@
-import { ArrowLeft, Clock, Tag, Users } from 'lucide-react'
+import { ArrowLeft, Clock, Tag, Users, Edit, Trash2, ShoppingCart } from 'lucide-react'
 
-const RecipeDetail = ({ recipe, onBack }) => {
+const RecipeDetail = ({ recipe, onBack, onEdit, onDelete, onExportShopping }) => {
   return (
     <div className="recipe-detail">
-      <button className="back-btn" onClick={onBack}>
-        <ArrowLeft size={20} />
-        Volver al inicio
-      </button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <button className="back-btn" onClick={onBack} style={{ margin: 0 }}>
+          <ArrowLeft size={20} />
+          Volver
+        </button>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button className="btn-secondary" onClick={onExportShopping} title="Descargar Lista de Compra">
+            <ShoppingCart size={18} />
+            <span style={{ fontSize: '0.9rem', marginLeft: '4px' }}>Lista</span>
+          </button>
+          <button className="btn-secondary" onClick={onEdit} title="Editar Receta">
+            <Edit size={18} />
+          </button>
+          <button className="btn-secondary" onClick={onDelete} title="Eliminar Receta" style={{ color: 'red', borderColor: '#ffcccc' }}>
+            <Trash2 size={18} />
+          </button>
+        </div>
+      </div>
 
       <div className="detail-header">
         <h2 className="detail-title">{recipe.title}</h2>
@@ -17,7 +31,7 @@ const RecipeDetail = ({ recipe, onBack }) => {
           </span>
           <span className="tag">
             <Clock size={16} />
-            {recipe.prepTime}
+            {recipe.preptime}
           </span>
           <span className="tag">
             <Users size={16} />

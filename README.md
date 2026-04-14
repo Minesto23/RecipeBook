@@ -1,64 +1,64 @@
-# Recetario Familiar 🍲
+# Family Recipe Book 🍲
 
-**Recetario Familiar** es una aplicación web moderna, cálida y minimalista diseñada para guardar, visualizar y heredar las mejores recetas tradicionales de nuestra familia.
-
----
-
-## ✨ Características
-
-1. **Galería de Recetas**: Visualiza todas las recetas en una cuadrícula (grid) atractiva, con imágenes, tiempo de preparación y la categoría del plato.
-2. **Buscador Integrado**: Filtra las recetas en tiempo real buscando palabras clave en el título o entre los ingredientes.
-3. **Vista de Elaboración Interactiva**:
-   * Descripciones completas y listas de ingredientes que puedes marcar usando *checkboxes* a medida que cocinas.
-   * Pasos de preparación numerados con claridad.
-   * Sección especial dedicada a la sabiduría culinaria ("Notas y Secretos de Familia").
-4. **Formulario de Añadir Nueva Receta**: Formulario dinámico y sencillo que permite ampliar la lista de ingredientes y pasos de forma individual, con la flexibilidad necesaria para todo tipo de elaboraciones.
-5. **Diseño Responsivo**: La aplicación se adapta automáticamente y se ve excelente tanto desde un monitor como desde la comodidad de un teléfono móvil en la cocina.
+**Family Recipe Book** is a modern, warm, and minimalist web application designed to save, view, and inherit the best traditional recipes from our family.
 
 ---
 
-## 📖 Cómo utilizar la Aplicación
+## ✨ Features
 
-### Explorar las recetas
-- Al ingresar verás un panel principal con la galería de recetas disponibles. Haz clic en cualquiera de las **tarjetas** para entrar a los detalles.
-- Utiliza la **barra de búsqueda** ubicada en la barra superior (Navbar) para buscar algo en particular, por ejemplo "Pollo" o "Azafrán".
-
-### Cocinar una receta
-- Al hacer clic en un plato, accederás a todos sus detalles y a la imagen a gran tamaño.
-- **Tip útil:** Ve marcando las casillas cuadradas (`checkboxes`) junto a cada ingrediente conforme los prepares en tu mesa de trabajo, de este modo nunca dudarás de qué le falta al guiso.
-
-### Añadir una Receta Nueva
-- Haz clic en el botón **"+ Añadir Nueva Receta"** ubicado en la parte superior derecha.
-- Rellena la información básica (Título, Categoría, Porciones y Tiempo).
-- Usa los botones correspondientes para añadir cada **ingrediente** y **paso a paso**. Puedes utilizar el icono de "papelera" para borrar si te has equivocado al escribir algún campo.
-- Recuerda finalizar agregando ese toque característico de la abuela en el campo de **Notas de la familia**.
-- Pulsa "Guardar Receta", ¡y tu plato quedará preservado para las futuras generaciones!
+1. **Recipe Gallery**: View all recipes in an attractive grid with images, prep time, and dish category.
+2. **Integrated Search**: Filter recipes in real-time by searching for keywords in the title or ingredients.
+3. **Interactive Cooking View**:
+   * Complete descriptions and ingredient lists with interactable *checkboxes* to mark off items as you cook.
+   * Clear, numbered step-by-step prep instructions.
+   * Special section dedicated to culinary wisdom ("Family Notes and Secrets").
+4. **Add New Recipe Form**: Dynamic and simple form to expand your collection. You can individually add or remove ingredient rows and preparation steps, making it flexible for any type of dish.
+5. **Responsive Design**: The application seamlessly adapts and looks excellent both on a wide monitor and directly from your mobile phone in the kitchen.
 
 ---
 
-## 🛠️ Cómo iniciar el proyecto en Local
+## 📖 How to Use the App
 
-Para desarrolladores o si quieres ejecutar la aplicación en tu propio ordenador:
+### Browse Recipes
+- Upon entering, you'll see a main dashboard with the available recipe gallery. Click on any of the **cards** to enter the details.
+- Use the **search bar** located in the top navbar to find something specific, such as "Chicken" or "Saffron".
 
-### Prerrequisitos
-- Tener instalado [Node.js](https://nodejs.org/es/).
+### Cook a Recipe
+- Clicking on a dish takes you to its full details and a large-sized image.
+- **Pro Tip:** Check the squared boxes (`checkboxes`) next to each ingredient as you prep them on your workspace, so you'll never wonder what's missing from your stew.
 
-### Instalación
+### Add a New Recipe
+- Click the **"+ Add New Recipe"** button located in the top right area.
+- Fill out the basic information (Title, Category, Servings, and Time).
+- Use the respective buttons to add each **ingredient** and **step**. You can use the "trash" icon to delete fields if you made a mistake.
+- Remember to finish by adding grandma's characteristic touch in the **Family notes** field.
+- Click "Save Recipe," and your dish will be preserved for future generations!
 
-1. Clona o descarga el repositorio y abre una terminal.
-2. Ubícate dentro de la carpeta del proyecto:
+---
+
+## 🛠️ How to Run the Project Locally
+
+For developers or if you want to run the app on your own computer:
+
+### Prerequisites
+- Proceed with an installation of [Node.js](https://nodejs.org/en/).
+
+### Installation
+
+1. Clone or download the repository and open a terminal.
+2. Navigate into the project folder:
    ```bash
    cd RecipeBook
    ```
-3. Instala las dependencias iniciales usando NPM:
+3. Install the required dependencies using NPM:
    ```bash
    npm install
    ```
-4. Inicia el servidor de desarrollo en vivo:
+4. Start the live development server:
    ```bash
    npm run dev
    ```
-5. Accede a la URL local (normalmente http://localhost:5173).
+5. Access the local URL (usually http://localhost:5173).
 
 ---
-*Hecho con cariño para conservar el sabor del hogar.*
+*Made with love to preserve the taste of home.*

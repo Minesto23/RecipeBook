@@ -7,7 +7,7 @@ export const initialRecipes = [
     id: '1',
     title: 'Paella Auténtica',
     category: 'Plato Principal',
-    prepTime: '60 min',
+    preptime: '60 min',
     image: paellaImg,
     servings: 4,
     ingredients: [
@@ -29,7 +29,7 @@ export const initialRecipes = [
     id: '2',
     title: 'Flan Casero de la Abuela',
     category: 'Postre',
-    prepTime: '45 min',
+    preptime: '45 min',
     image: flanImg,
     servings: 6,
     ingredients: [
@@ -50,7 +50,7 @@ export const initialRecipes = [
     id: '3',
     title: 'Lasaña Tradicional',
     category: 'Plato Principal',
-    prepTime: '90 min',
+    preptime: '90 min',
     image: lasagnaImg,
     servings: 8,
     ingredients: [

@@ -1,10 +1,11 @@
-import { Search, Plus } from 'lucide-react'
+import { Search, Plus, FileDown } from 'lucide-react'
+import logo from '../assets/logo.png'
 
-const Navbar = ({ onNavigateHome, onAddRecipe, searchQuery, setSearchQuery }) => {
+const Navbar = ({ onNavigateHome, onAddRecipe, onExportPDF, searchQuery, setSearchQuery }) => {
   return (
     <nav className="navbar">
       <div className="navbar-brand" onClick={onNavigateHome}>
-        <img src="/vite.svg" alt="Logo" width="32" height="32" />
+        <img src={logo} alt="Logo" width="48" height="48" style={{ borderRadius: '8px', objectFit: 'cover' }} />
         <h1>Recetario de la Familia</h1>
       </div>
       
@@ -19,6 +20,10 @@ const Navbar = ({ onNavigateHome, onAddRecipe, searchQuery, setSearchQuery }) =>
           />
         </div>
         
+        <button className="btn-secondary" onClick={onExportPDF} style={{marginRight: '10px'}} title="Exportar a PDF">
+          <FileDown size={20} />
+          PDF
+        </button>
         <button className="btn-primary" onClick={onAddRecipe}>
           <Plus size={20} />
           Añadir Nueva Receta

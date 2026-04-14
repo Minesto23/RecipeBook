@@ -1,20 +1,20 @@
 import { useState } from 'react'
 import { Plus, Trash2 } from 'lucide-react'
-import { collection, addDoc } from 'firebase/firestore'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { db, storage } from '../services/firebase'
+import { supabase } from '../services/supabase'
 
-const AddRecipeForm = ({ onSave, onCancel }) => {
-  const [title, setTitle] = useState('')
-  const [category, setCategory] = useState('Plato Principal')
-  const [prepTime, setPrepTime] = useState('')
-  const [servings, setServings] = useState('')
+const AddRecipeForm = ({ onSave, onCancel, existingRecipe = null }) => {
+  const [title, setTitle] = useState(existingRecipe?.title || '')
+  const [category, setCategory] = useState(existingRecipe?.category || 'Plato Principal')
+  // Extraemos el número si la cadena es "X min"
+  const initialPrepTime = existingRecipe?.preptime ? existingRecipe.preptime.replace(' min', '') : ''
+  const [prepTime, setPrepTime] = useState(initialPrepTime)
+  const [servings, setServings] = useState(existingRecipe?.servings || '')
   const [imageFile, setImageFile] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   
-  const [ingredients, setIngredients] = useState([{ name: '', amount: '' }])
-  const [instructions, setInstructions] = useState([''])
-  const [notes, setNotes] = useState('')
+  const [ingredients, setIngredients] = useState(existingRecipe?.ingredients || [{ name: '', amount: '' }])
+  const [instructions, setInstructions] = useState(existingRecipe?.instructions || [''])
+  const [notes, setNotes] = useState(existingRecipe?.notes || '')
 
   const handleAddIngredient = () => setIngredients([...ingredients, { name: '', amount: '' }])
   const handleRemoveIngredient = (index) => setIngredients(ingredients.filter((_, i) => i !== index))
@@ -37,36 +37,54 @@ const AddRecipeForm = ({ onSave, onCancel }) => {
     setIsSubmitting(true)
 
     try {
-      let imageUrl = ''
+      let imageUrl = existingRecipe?.image || ''
       
-      // Si el usuario seleccionó una imagen, subirla a Firebase Storage primero
+      // Si el usuario seleccionó una NUEVA imagen, la subimos
       if (imageFile) {
-        const imageRef = ref(storage, `recipes/${Date.now()}_${imageFile.name}`)
-        await uploadBytes(imageRef, imageFile)
-        imageUrl = await getDownloadURL(imageRef)
+        const fileExt = imageFile.name.split('.').pop()
+        const fileName = `${Date.now()}.${fileExt}`
+        const { data, error } = await supabase.storage
+          .from('recipe-images')
+          .upload(fileName, imageFile)
+          
+        if (error) {
+          console.error("Error upload image:", error)
+        } else {
+          const { data: publicUrlData } = supabase.storage.from('recipe-images').getPublicUrl(fileName)
+          imageUrl = publicUrlData.publicUrl
+        }
       }
 
       // Preparar el documento de la receta
-      const newRecipeData = {
+      const recipeData = {
         title,
         category,
-        prepTime: `${prepTime} min`,
+        preptime: `${prepTime} min`,
         servings,
-        image: imageUrl || 'https://via.placeholder.com/800x400?text=Foto+Pendiente', // fallback
+        image: imageUrl || 'https://via.placeholder.com/800x400?text=Foto+Pendiente',
         ingredients: ingredients.filter(i => i.name && i.amount),
         instructions: instructions.filter(i => i.trim() !== ''),
-        notes,
-        createdAt: new Date().toISOString()
+        notes
       }
 
-      // Guardar en Firestore
-      await addDoc(collection(db, 'recipes'), newRecipeData)
+      if (existingRecipe) {
+        // Actualizar en Supabase
+        const { error: dbError } = await supabase.from('recipes')
+          .update(recipeData)
+          .eq('id', existingRecipe.id)
+        if (dbError) throw dbError
+      } else {
+        // Guardar nuevo en Supabase
+        const newRecipeData = { ...recipeData, createdat: new Date().toISOString() }
+        const { error: dbError } = await supabase.from('recipes').insert([newRecipeData])
+        if (dbError) throw dbError
+      }
       
       // Volver al home
       onSave()
     } catch (error) {
       console.error("Error al guardar la receta: ", error)
-      alert("Hubo un error al guardar. Asegúrate de tener permisos en Firebase.")
+      alert("Hubo un error al guardar en Supabase. Verifica la consola.")
     } finally {
       setIsSubmitting(false)
     }
@@ -74,7 +92,7 @@ const AddRecipeForm = ({ onSave, onCancel }) => {
 
   return (
     <div className="add-recipe-container">
-      <h2>Añadir Nueva Receta</h2>
+      <h2>{existingRecipe ? 'Editar Receta' : 'Añadir Nueva Receta'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Título de la receta</label>
@@ -104,7 +122,7 @@ const AddRecipeForm = ({ onSave, onCancel }) => {
             <input type="number" required value={servings} onChange={e => setServings(e.target.value)} placeholder="Ej. 4" />
           </div>
           <div className="form-group">
-            <label>Subir Fotografía</label>
+            <label>Subir Fotografía {existingRecipe && "(Opcional, sobrescribe anterior)"}</label>
             <input 
               type="file" 
               accept="image/*" 
@@ -164,7 +182,7 @@ const AddRecipeForm = ({ onSave, onCancel }) => {
         <div className="form-actions">
           <button type="button" onClick={onCancel} disabled={isSubmitting} style={{background:'none', border:'none', color:'var(--color-text-muted)', cursor:'pointer', fontWeight:'500'}}>Cancelar</button>
           <button type="submit" className="btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Guardando en la nube...' : 'Guardar Receta'}
+            {isSubmitting ? 'Guardando...' : (existingRecipe ? 'Actualizar Receta' : 'Guardar Receta')}
           </button>
         </div>
       </form>
