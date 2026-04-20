@@ -195,7 +195,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .recipes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: var(--spacing-xl);
 }
 
@@ -460,11 +460,50 @@ h1, h2, h3, h4, h5, h6 {
   .navbar {
     flex-direction: column;
     gap: var(--spacing-md);
+    padding: var(--spacing-md);
+  }
+  .navbar-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-md);
+  }
+  .search-container {
+    width: 100%;
+  }
+  .search-container input {
+    width: 100%;
+  }
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    margin-right: 0 !important;
   }
   .detail-content {
     grid-template-columns: 1fr;
   }
   .hero-content h2 {
     font-size: 2rem;
+  }
+  .detail-title {
+    font-size: 1.8rem;
+  }
+  .recipe-detail {
+    padding: var(--spacing-md);
+  }
+  .detail-image {
+    height: 250px;
+  }
+  .gallery-section {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  .add-recipe-container {
+    margin: var(--spacing-md);
+    padding: var(--spacing-lg);
+  }
+  .form-actions {
+    flex-direction: column;
+  }
+  .form-actions button {
+    width: 100%;
   }
 }
